@@ -1,0 +1,148 @@
+---
+swagger: "2.0"
+info:
+  description: Roles
+  version: 1.0.0
+  title: Roles And Resources API
+host: virtserver.swaggerhub.com
+basePath: /demo8141/resources/1.0.0
+schemes:
+- https
+paths:
+  /roles/:
+    get:
+      tags:
+      - Roles
+      summary: List All Roles
+      description: Get Role list
+      operationId: get role list
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        "200":
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/roles'
+        "400":
+          description: Invalid status value
+      security:
+      - petstore_auth:
+        - write:pets
+        - read:pets
+securityDefinitions:
+  petstore_auth:
+    type: oauth2
+    authorizationUrl: http://petstore.swagger.io/oauth/dialog
+    flow: implicit
+    scopes:
+      write:pets: modify pets in your account
+      read:pets: read your pets
+  api_key:
+    type: apiKey
+    name: api_key
+    in: header
+definitions:
+  filter:
+    type: object
+    properties:
+      filters:
+        $ref: '#/definitions/filter_filters'
+    xml:
+      name: filter
+  roles:
+    type: object
+    required:
+    - id
+    - name
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+        example: CUSTOMER_JOURNEY
+      description:
+        type: string
+        example: CUSTOMER_JOURNEY access to all cjm stuff
+      subjects:
+        type: integer
+        format: int64
+        example: 200
+      modified:
+        type: integer
+        format: int64
+        example: 1222231314
+      createdBy:
+        type: string
+        example: Anish
+  ApiResponse:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      type:
+        type: string
+      message:
+        type: string
+  filter_filters:
+    type: object
+    properties:
+      subjects:
+        type: array
+        xml:
+          name: subjects
+          wrapped: true
+        items:
+          type: string
+      resources:
+        type: array
+        xml:
+          name: subjects
+          wrapped: true
+        items:
+          type: string
+      roles:
+        type: array
+        xml:
+          name: roles
+          wrapped: true
+        items:
+          type: string
+      modifiedAt:
+        type: string
+        example: 12/12/12
+      modifiedBy:
+        type: string
+        example: Anish-id
+      searchExpression:
+        type: string
+        example: anish
+    xml:
+      name: items
+  role_rules:
+    type: object
+    properties:
+      attributeExpression:
+        type: string
+        example: profile.person.nationality='Indian'
+      resourceExpression:
+        type: string
+        example: resourceType='Segment'
+      updatedAt:
+        type: integer
+        format: int64
+        example: 1223131
+      subjects:
+        type: array
+        xml:
+          name: subjects
+          wrapped: true
+        items:
+          type: string
+          example: "123"
+    xml:
+      name: items
